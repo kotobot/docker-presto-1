@@ -82,11 +82,11 @@ setup_dir() {
     echo "coordinator=false" > $CONF_DIR/config.properties
     echo "query.max-memory=4GB" >> $CONF_DIR/config.properties
     echo "query.max-memory-per-node=1GB" >> $CONF_DIR/config.properties
-    echo "http-server.http.port=8080" >> $CONF_DIR/config.properties
+    echo "http-server.http.port=18080" >> $CONF_DIR/config.properties
     echo "discovery.uri=$SERV_URI" >> $CONF_DIR/config.properties
     cat $CONF_DIR/config.properties
   else
-    sed -ri 's/^(http-server.http.port=).*/\1'"8080"'/' "$CONF_DIR/config.properties"
+    sed -ri 's/^(http-server.http.port=).*/\1'"18080"'/' "$CONF_DIR/config.properties"
     sed -ri 's|^(discovery.uri=).*|\1'"$SERV_URI"'|' "$CONF_DIR/config.properties"
   fi
 
@@ -118,9 +118,9 @@ start_presto() {
 
   # use --privileged=true has the potential risk of causing clock drift
   # references: http://stackoverflow.com/questions/24288616/permission-denied-on-accessing-host-directory-in-docker
-  docker run -d --name="$PRESTO_ALIAS" --restart=always -h presto -p $SERV_PORT:8080 \
+  docker run -d --name="$PRESTO_ALIAS" --restart=always -h presto -p $SERV_PORT:18080 \
     -v $CONF_DIR:/presto/etc:Z -v $DATA_DIR:/presto/data:Z \
-    zhicwu/presto:$PRESTO_TAG
+    presto:$PRESTO_TAG
 
   info "Try 'docker logs -f \"$PRESTO_ALIAS\"' to see if this works"
 }

@@ -9,7 +9,7 @@ FROM zhicwu/java:8
 MAINTAINER Zhichun Wu <zhicwu@gmail.com>
 
 # Set Environment Variables
-ENV PRESTO_VERSION=0.146 PRESTO_HOME=/presto BASE_URL=https://repo1.maven.org/maven2/com/facebook/presto
+ENV PRESTO_VERSION=0.152 PRESTO_HOME=/presto BASE_URL=https://repo1.maven.org/maven2/com/facebook/presto
 
 # Download Presto
 RUN apt-get update \
@@ -36,6 +36,6 @@ RUN chmod +x presto-*executable.jar \
 WORKDIR $PRESTO_HOME
 VOLUME ["$PRESTO_HOME/etc", "$PRESTO_HOME/data"]
 
-EXPOSE 8080
+EXPOSE 18080
 
 ENTRYPOINT ["./bin/launcher", "run"]
